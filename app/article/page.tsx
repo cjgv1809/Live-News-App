@@ -1,17 +1,27 @@
+"use client";
+
 import LiveTimestamp from "@/components/LiveTimestamp";
 import { notFound } from "next/navigation";
+import { useState, useEffect } from "react";
 
 type Props = {
   searchParams?: Article;
 };
 
 function ArticlePage({ searchParams }: Props) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   if (
     (searchParams && Object.entries(searchParams).length === 0) ||
     !searchParams
   ) {
     return notFound();
   }
+
 
   const article: Article = searchParams;
 
