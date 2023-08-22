@@ -1,27 +1,17 @@
-"use client";
-
 import LiveTimestamp from "@/components/LiveTimestamp";
 import { notFound } from "next/navigation";
-import { useState, useEffect } from "react";
 
 type Props = {
   searchParams?: Article;
 };
 
 function ArticlePage({ searchParams }: Props) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
   if (
     (searchParams && Object.entries(searchParams).length === 0) ||
     !searchParams
   ) {
     return notFound();
   }
-
 
   const article: Article = searchParams;
 
@@ -43,9 +33,11 @@ function ArticlePage({ searchParams }: Props) {
           </h1>
 
           <div className="flex divide-x-2 space-x-4">
-            <h2 className="font-bold">By: {article.author ?? "unknown"}</h2>
+            <h2 className="font-bold">
+              By: {article.author !== null ? article.author : "unknown"}
+            </h2>
             <h2 className="font-bold pl-4">
-              Source: {article.source ?? "unknown"}
+              Source: {article.source !== null ? article.source : "unknown"}
             </h2>
             <p className="pl-4">
               <LiveTimestamp time={article.published_at} />

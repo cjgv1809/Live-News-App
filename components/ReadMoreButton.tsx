@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { encode } from "querystring";
 
 type Props = {
   article: Article;
@@ -10,11 +11,8 @@ function ReadMoreButton({ article }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    const queryString = Object.entries(article)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
-
-    router.push(`/article?${queryString}`);
+    const url = `/article?${encode(article)}`;
+    router.push(`${url}`);
   };
 
   return (
